@@ -1,7 +1,7 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useMotionValue, animate } from 'framer-motion';
-import { X, ArrowUp, ArrowDown, ChevronsUp, ChevronsDown } from 'lucide-react';
-import { Photo } from '../types';
+import React, { useRef, useEffect } from "react";
+import { motion, useMotionValue, animate } from "framer-motion";
+import { X, ArrowUp, ArrowDown, ChevronsUp, ChevronsDown } from "lucide-react";
+import { Photo } from "../types";
 
 interface PhotoCardProps {
   photo: Photo;
@@ -38,15 +38,15 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
     // Don't animate position changes while dragging
     if (isDragging.current) return;
 
-    const xAnimation = animate(x, photo.x, { 
-      type: "spring", 
-      stiffness: 300, 
-      damping: 30 
+    const xAnimation = animate(x, photo.x, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
     });
-    const yAnimation = animate(y, photo.y, { 
-      type: "spring", 
-      stiffness: 300, 
-      damping: 30 
+    const yAnimation = animate(y, photo.y, {
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
     });
 
     return () => {
@@ -70,7 +70,7 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
   const width = photo.width || 4;
   const height = photo.height || 5;
   const aspectRatio = width / height;
-  
+
   // If the photo is significantly landscape, we widen the card to maintain visual balance
   const isLandscape = aspectRatio > 1.2;
   const cardBaseWidth = isLandscape ? 300 : 220;
@@ -86,42 +86,42 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
         x,
         y,
         width: `${cardBaseWidth}px`,
-        height: 'auto',
-        boxShadow: '2px 4px 15px rgba(0,0,0,0.4)',
+        height: "auto",
+        boxShadow: "2px 4px 15px rgba(0,0,0,0.4)",
         zIndex: photo.zIndex,
       }}
-      initial={{ 
-        opacity: 0, 
+      initial={{
+        opacity: 0,
         scale: 0.8,
-        rotate: photo.rotation + (Math.random() * 10 - 5) // Slight drift on entry
+        rotate: photo.rotation + (Math.random() * 10 - 5), // Slight drift on entry
       }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         scale: isHighlighted ? photo.scale * 1.1 : photo.scale, // Scale up if highlighted
         rotate: photo.rotation,
         zIndex: photo.zIndex, // Keep original z-index even when highlighted
-        boxShadow: isHighlighted 
-          ? '0 0 0 4px #60a5fa, 0 30px 60px -10px rgba(0, 0, 0, 0.6)' // Blue glow ring
-          : '2px 4px 15px rgba(0,0,0,0.4)'
+        boxShadow: isHighlighted
+          ? "0 0 0 4px #60a5fa, 0 30px 60px -10px rgba(0, 0, 0, 0.6)" // Blue glow ring
+          : "2px 4px 15px rgba(0,0,0,0.4)",
       }}
-      whileHover={{ cursor: 'grab' }}
-      whileDrag={{ 
-        scale: photo.scale * 1.05, 
-        cursor: 'grabbing',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+      whileHover={{ cursor: "grab" }}
+      whileDrag={{
+        scale: photo.scale * 1.05,
+        cursor: "grabbing",
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
       }}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       className="absolute flex flex-col items-center justify-start bg-white p-3 pb-8 shadow-xl group"
     >
       {/* Photo Area - Dynamic Aspect Ratio */}
-      <div 
+      <div
         className="relative w-full bg-gray-100 overflow-hidden pointer-events-none filter sepia-[0.1] contrast-[1.05]"
         style={{
-             backgroundImage: `url(${photo.url})`,
-             backgroundSize: 'cover',
-             backgroundPosition: 'center',
-             aspectRatio: `${aspectRatio}`,
+          backgroundImage: `url(${photo.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          aspectRatio: `${aspectRatio}`,
         }}
       >
         {/* Inner shadow for depth inside the frame */}
@@ -190,8 +190,11 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
       </button>
 
       {/* Paper texture overlay for realism */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-repeat"
-           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.03] bg-repeat"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
       />
     </motion.div>
   );
