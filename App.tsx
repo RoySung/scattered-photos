@@ -266,7 +266,7 @@ const App: React.FC = () => {
       });
 
       const link = document.createElement("a");
-      link.download = `scattered-memories-${Date.now()}.png`;
+      link.download = `scattered-photos-${Date.now()}.png`;
       link.href = dataUrl;
       link.click();
     } catch (err) {

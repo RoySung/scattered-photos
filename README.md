@@ -1,6 +1,6 @@
-# Scattered Memories Web App
+# Scattered Photos
 
-A beautiful photo memories web application that lets you create, arrange, and export your cherished memories in a creative scattered layout. Built with React, Vite, and Framer Motion.
+Create stunning photo collages with authentic scattered and stacking effects. Arrange your photos freely on the canvas—just like spreading pictures across a desk, each draggable, layered, and naturally positioned.
 
 ## ✨ Features
 
@@ -14,7 +14,7 @@ A beautiful photo memories web application that lets you create, arrange, and ex
 
 ## 🚀 Live Demo
 
-Visit the live app: [https://roysung.github.io/scattered-memories-web-app/](https://roysung.github.io/scattered-memories-web-app/)
+Visit the live app: [https://roysung.github.io/scattered-photos/](https://roysung.github.io/scattered-photos/)
 
 ## 🛠️ Tech Stack
 
@@ -37,8 +37,8 @@ Visit the live app: [https://roysung.github.io/scattered-memories-web-app/](http
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/RoySung/scattered-memories-web-app.git
-   cd scattered-memories-web-app
+   git clone https://github.com/RoySung/scattered-photos.git
+   cd scattered-photos
    ```
 
 2. Install dependencies:
@@ -102,7 +102,7 @@ npm run preview
 ## 🗂️ Project Structure
 
 ```
-scattered-memories-web-app/
+scattered-photos/
 ├── components/          # React components
 │   ├── Controls.tsx     # Bottom toolbar controls
 │   ├── EmptyState.tsx   # Empty state placeholder
