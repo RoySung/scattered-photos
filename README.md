@@ -1,100 +1,105 @@
 # Scattered Photos
 
-Create stunning photo collages with authentic scattered and stacking effects. Arrange your photos freely on the canvas, just like spreading pictures across a desk, each draggable, layered, and naturally positioned.
+![Scattered Photos Animation Banner](./export-animation-example.gif)
+
+Create authentic scattered-photo collages in the browser. Drag, stack, reorder, and style your layout like photos spread across a desk.
 
 ## Features
 
-- **Drag & Drop Interface** - Freely arrange photos anywhere on the canvas
-- **Layer Management** - Control the stacking order of your photos with an intuitive sidebar
-- **Customizable Backgrounds** - Choose from solid colors, gradients, images, or patterns
-- **Export to PNG** - Save your composition as a high-quality image
-- **Persistent Storage** - Your photos and settings are saved locally using IndexedDB and localStorage
-- **Responsive Design** - Works seamlessly on desktop and mobile devices
+- **Drag & Drop Canvas** - Freely move photos anywhere on the board
+- **Layer Management** - Reorder, bring to front/back, and organize stack depth
+- **Custom Backgrounds** - Use default style, solid colors, or image backgrounds
+- **Animation Preview** - Play collage animations with multiple effects:
+  - Sequential
+  - Shuffle
+  - Flip
+  - Fade
+- **Animation Export (GIF/MP4)** - Export animated output as:
+  - GIF (`gif.js`)
+  - MP4 (`mp4-muxer` + WebCodecs)
+  - FPS options: `15 / 24 / 30`
+- **PNG Export** - Save a high-quality still image of the current layout
+- **Persistent Storage** - Photos/settings are saved locally with IndexedDB + localStorage
+- **Responsive UI** - Works across desktop and mobile viewports
 
 ## Live Demo
 
-[https://roysung.github.io/scattered-photos/](https://roysung.github.io/scattered-photos/)
+[https://scattered-photos.roysunghan.workers.dev/](https://scattered-photos.roysunghan.workers.dev/)
 
 ## Tech Stack
 
 - **React 19** - UI framework
 - **TypeScript** - Type safety
-- **Vite** - Build tool and dev server
-- **Framer Motion** - Smooth animations
-- **html-to-image** - Canvas export functionality
-- **IndexedDB** - Client-side photo storage
+- **Vite 6** - Dev server and production build
+- **Tailwind CSS 4** - Styling system
+- **Framer Motion** - UI and transition animations
+- **html-to-image** - PNG/frame capture
+- **gif.js** - GIF encoding
+- **mp4-muxer + WebCodecs API** - MP4 export pipeline
+- **lucide-react** - Icon set
+- **IndexedDB + localStorage** - Client-side persistence
 
 ## Installation
 
 ### Prerequisites
 
 - Node.js 18+
-- pnpm (recommended) or npm
+- pnpm (recommended)
 
 ### Setup
 
-1. Clone the repository:
+```bash
+git clone https://github.com/RoySung/scattered-photos.git
+cd scattered-photos
+pnpm install
+pnpm dev
+```
 
-   ```bash
-   git clone https://github.com/RoySung/scattered-photos.git
-   cd scattered-photos
-   ```
+Open the local URL shown in terminal (typically [http://localhost:3001](http://localhost:3001)).
 
-2. Install dependencies:
-
-   ```bash
-   pnpm install
-   ```
-
-3. Start the development server:
-
-   ```bash
-   pnpm dev
-   ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
-
-## Build & Deployment
+## Build & Preview
 
 ```bash
-# Production build
 pnpm build
-
-# Preview production build
 pnpm preview
 ```
 
-The built files will be in the `dist` directory.
+Production output is generated in `dist/`.
 
 ## Usage
 
-1. **Add Photos** - Click "Add photos" to upload images from your device
-2. **Arrange** - Drag photos to your desired positions
-3. **Customize** - Use the bottom toolbar to change background colors, gradients, or images
-4. **Manage Layers** - Click the layers icon to reorder, highlight, or delete individual photos
-5. **Export** - Save your creation as a PNG
+1. **Add Photos** - Upload one or more images
+2. **Arrange** - Drag and rotate to compose your collage
+3. **Style** - Adjust background and global photo scale
+4. **Manage Layers** - Fine-tune stacking order from the sidebar
+5. **Animate** - Open animation panel, choose effect/speed/FPS, preview playback
+6. **Export** - Save PNG, or export animation as GIF/MP4
 
 ## Project Structure
 
-```
+```text
 scattered-photos/
-├── components/          # React components
-│   ├── Controls.tsx     # Bottom toolbar controls
-│   ├── EmptyState.tsx   # Empty state placeholder
-│   ├── LayerSidebar.tsx # Layer management sidebar
-│   └── PhotoCard.tsx    # Individual photo card
+├── components/
+│   ├── AnimationDialog.tsx
+│   ├── Controls.tsx
+│   ├── EmptyState.tsx
+│   ├── LayerSidebar.tsx
+│   └── PhotoCard.tsx
 ├── utils/
-│   └── storage.ts       # IndexedDB utilities
-├── App.tsx              # Main application component
-├── types.ts             # TypeScript type definitions
-└── vite.config.ts       # Vite configuration
+│   ├── animationEffects.ts
+│   ├── storage.ts
+│   └── videoExport.ts
+├── App.tsx
+├── index.tsx
+├── types.ts
+└── vite.config.ts
 ```
 
 ## Contributing
 
-Contributions are welcome - feel free to report bugs, suggest features, or submit pull requests.
+Issues and pull requests are welcome.
 
 ## Acknowledgments
 
 - Icons by [Lucide](https://lucide.dev/)
-- Animations powered by [Framer Motion](https://www.framer.com/motion/)
+- Motion system powered by [Framer Motion](https://www.framer.com/motion/)

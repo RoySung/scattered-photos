@@ -101,7 +101,9 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
     return (Math.atan2(clientY - centerY, clientX - centerX) * 180) / Math.PI;
   };
 
-  const handleRotatePointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+  const handleRotatePointerDown = (
+    event: React.PointerEvent<HTMLButtonElement>,
+  ) => {
     event.stopPropagation();
     event.preventDefault();
 
