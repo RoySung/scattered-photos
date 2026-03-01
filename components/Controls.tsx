@@ -42,6 +42,16 @@ export const Controls: React.FC<ControlsProps> = ({
   const [showSlider, setShowSlider] = useState(false);
   const [showBgMenu, setShowBgMenu] = useState(false);
 
+  const presetBackgrounds = [
+    "/images/bg-1.jpg",
+    "/images/bg-2.jpg",
+    "/images/bg-3.jpg",
+    "/images/bg-4.jpg",
+    "/images/bg-5.jpg",
+    "/images/bg-6.jpg",
+    "/images/bg-7.png",
+  ];
+
   const handleBgImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -61,10 +71,10 @@ export const Controls: React.FC<ControlsProps> = ({
   };
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-[9999] flex flex-col items-center gap-3 no-export">
+    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-9999 flex flex-col items-center gap-3 no-export">
       {/* Background Menu Popup */}
       {showBgMenu && (
-        <div className="p-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 flex flex-col gap-3 min-w-[200px]">
+        <div className="p-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl animate-in fade-in slide-in-from-bottom-4 flex flex-col gap-3 min-w-60">
           <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider text-center">
             Background Style
           </span>
@@ -113,6 +123,24 @@ export const Controls: React.FC<ControlsProps> = ({
               className="hidden"
               onChange={handleBgImageUpload}
             />
+          </div>
+
+          <div className="grid grid-cols-5 gap-2">
+            {presetBackgrounds.map((imagePath, index) => (
+              <button
+                key={imagePath}
+                onClick={() =>
+                  onBackgroundChange({ type: "image", value: imagePath })
+                }
+                className="w-9 h-9 rounded-lg border border-white/20 hover:border-white/60 transition-all overflow-hidden"
+                title={`Preset BG ${index + 1}`}
+                style={{
+                  backgroundImage: `url(${imagePath})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+              />
+            ))}
           </div>
         </div>
       )}
