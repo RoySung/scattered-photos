@@ -485,9 +485,8 @@ export const AnimationDialog: React.FC<AnimationDialogProps> = ({
               background: "rgba(0,0,0,0.25)",
             }}
           >
-            {/* Full-size canvas scaled down visually — still full-res for export */}
+            {/* Preview wrapper (scaled visually) */}
             <div
-              ref={canvasRef}
               style={{
                 position: "absolute",
                 left: 0,
@@ -496,22 +495,34 @@ export const AnimationDialog: React.FC<AnimationDialogProps> = ({
                 height: winH,
                 transform: `scale(${previewScale})`,
                 transformOrigin: "top left",
-                ...bgStyle,
               }}
             >
-              {background.type === "default" && (
-                <div className="absolute inset-0 pointer-events-none bg-black/20" />
-              )}
-              {photos.map((photo) => (
-                <PreviewCard
-                  key={photo.id}
-                  photo={photo}
-                  domRef={(el) => {
-                    if (el) photoRefsRef.current.set(photo.id, el);
-                    else photoRefsRef.current.delete(photo.id);
-                  }}
-                />
-              ))}
+              {/* Full-size export canvas (unscaled) */}
+              <div
+                ref={canvasRef}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  width: winW,
+                  height: winH,
+                  ...bgStyle,
+                }}
+              >
+                {background.type === "default" && (
+                  <div className="absolute inset-0 pointer-events-none bg-black/20" />
+                )}
+                {photos.map((photo) => (
+                  <PreviewCard
+                    key={photo.id}
+                    photo={photo}
+                    domRef={(el) => {
+                      if (el) photoRefsRef.current.set(photo.id, el);
+                      else photoRefsRef.current.delete(photo.id);
+                    }}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Resolution badge */}
