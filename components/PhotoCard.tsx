@@ -1,6 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
-import { X, ArrowUp, ArrowDown, ChevronsUp, ChevronsDown } from "lucide-react";
+import {
+  X,
+  ArrowUp,
+  ArrowDown,
+  ChevronsUp,
+  ChevronsDown,
+  RotateCw,
+} from "lucide-react";
 import { Photo } from "../types";
 
 interface PhotoCardProps {
@@ -14,6 +21,7 @@ interface PhotoCardProps {
   onLayerDown: () => void;
   onBringToFront: () => void;
   onSendToBack: () => void;
+  onRotate: (rotation: number) => void;
 }
 
 export const PhotoCard: React.FC<PhotoCardProps> = ({
@@ -27,11 +35,14 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
   onLayerDown,
   onBringToFront,
   onSendToBack,
+  onRotate,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(photo.x);
   const y = useMotionValue(photo.y);
   const isDragging = useRef(false);
+  const [isRotating, setIsRotating] = useState(false);
+  const [rotationPreview, setRotationPreview] = useState<number | null>(null);
 
   // Sync motion values with photo position changes with animation
   useEffect(() => {
@@ -55,6 +66,12 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
     };
   }, [photo.x, photo.y, x, y]);
 
+  useEffect(() => {
+    return () => {
+      document.body.style.cursor = "";
+    };
+  }, []);
+
   const handleDragStart = () => {
     isDragging.current = true;
     onDragStart();
@@ -75,10 +92,57 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
   const isLandscape = aspectRatio > 1.2;
   const cardBaseWidth = isLandscape ? 300 : 220;
 
+  const getAngleFromCenter = (clientX: number, clientY: number) => {
+    const rect = cardRef.current?.getBoundingClientRect();
+    if (!rect) return photo.rotation;
+
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    return (Math.atan2(clientY - centerY, clientX - centerX) * 180) / Math.PI;
+  };
+
+  const handleRotatePointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const startPointerAngle = getAngleFromCenter(event.clientX, event.clientY);
+    const startRotation = photo.rotation;
+
+    setIsRotating(true);
+    setRotationPreview(photo.rotation);
+    document.body.style.cursor = "grabbing";
+
+    const handlePointerMove = (moveEvent: PointerEvent) => {
+      const currentPointerAngle = getAngleFromCenter(
+        moveEvent.clientX,
+        moveEvent.clientY,
+      );
+      const delta = currentPointerAngle - startPointerAngle;
+      const rawRotation = startRotation + delta;
+      const snappedRotation = Math.round(rawRotation / 15) * 15;
+      const nextRotation = moveEvent.altKey ? rawRotation : snappedRotation;
+      setRotationPreview(nextRotation);
+      onRotate(nextRotation);
+    };
+
+    const handlePointerUp = () => {
+      setIsRotating(false);
+      setRotationPreview(null);
+      document.body.style.cursor = "";
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointercancel", handlePointerUp);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointercancel", handlePointerUp);
+  };
+
   return (
     <motion.div
       ref={cardRef}
-      drag
+      drag={!isRotating}
       dragConstraints={containerRef}
       dragElastic={0.05}
       dragMomentum={false}
@@ -109,6 +173,9 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
         scale: photo.scale * 1.05,
         cursor: "grabbing",
         boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
+      }}
+      onPointerLeave={() => {
+        if (!isRotating) document.body.style.cursor = "";
       }}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
@@ -175,6 +242,21 @@ export const PhotoCard: React.FC<PhotoCardProps> = ({
           <ChevronsDown size={14} strokeWidth={3} />
         </button>
       </div>
+
+      {/* Rotate Handle (Bottom Center) */}
+      <button
+        onPointerDown={handleRotatePointerDown}
+        className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white text-gray-700 rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 hover:bg-gray-100 active:scale-95 transition-all z-50 cursor-grab active:cursor-grabbing"
+        title="Rotate photo (hold Option to disable 15° snap)"
+      >
+        <RotateCw size={14} strokeWidth={3} />
+      </button>
+
+      {isRotating && rotationPreview !== null && (
+        <div className="absolute -bottom-11 left-1/2 -translate-x-1/2 bg-black/75 text-white text-[11px] px-2 py-1 rounded-md pointer-events-none z-50 select-none">
+          {Math.round(rotationPreview)}°
+        </div>
+      )}
 
       {/* Remove Button (Top Right) */}
       <button

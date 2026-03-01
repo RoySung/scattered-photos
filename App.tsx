@@ -208,6 +208,12 @@ const App: React.FC = () => {
     setPhotos((prev) => prev.map((p) => (p.id === id ? { ...p, x, y } : p)));
   };
 
+  const handleUpdateRotation = (id: string, rotation: number) => {
+    setPhotos((prev) =>
+      prev.map((p) => (p.id === id ? { ...p, rotation } : p)),
+    );
+  };
+
   const handleClearAll = () => {
     setPhotos([]);
   };
@@ -333,6 +339,7 @@ const App: React.FC = () => {
           onLayerDown={() => handleMoveLayer(photo.id, "down")}
           onBringToFront={() => handleBringToFront(photo.id)}
           onSendToBack={() => handleSendToBack(photo.id)}
+          onRotate={(rotation) => handleUpdateRotation(photo.id, rotation)}
         />
       ))}
 
