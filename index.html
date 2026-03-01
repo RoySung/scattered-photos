@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scattered Memories</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
         margin: 0;
@@ -25,6 +24,13 @@
       }
     </style>
     <link rel="stylesheet" href="/index.css" />
+    <!-- Force COEP=credentialless so cross-origin images (Google Photos etc.) are not blocked.
+         Must be set BEFORE coi-serviceworker.js loads. -->
+    <script>
+      window.coi = { coepCredentialless: () => true };
+    </script>
+    <!-- coi-serviceworker reads window.coi and registers itself — must use <script src> not navigator.serviceWorker.register() -->
+    <script src="./coi-serviceworker.js"></script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,16 +1,19 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
+import { AnimatePresence } from "framer-motion";
 import { toPng } from "html-to-image";
 import { Photo, BackgroundSettings } from "./types";
 import { PhotoCard } from "./components/PhotoCard";
 import { Controls } from "./components/Controls";
 import { EmptyState } from "./components/EmptyState";
 import { LayerSidebar } from "./components/LayerSidebar";
+import { AnimationDialog } from "./components/AnimationDialog";
 import { loadPhotos, savePhotos } from "./utils/storage";
 
 const App: React.FC = () => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAnimationOpen, setIsAnimationOpen] = useState(false);
   const [background, setBackground] = useState<BackgroundSettings>({
     type: "default",
     value: "",
@@ -299,7 +302,7 @@ const App: React.FC = () => {
     return {
       ...base,
       backgroundColor: "#1a1a1a",
-      backgroundImage: `url("https://www.transparenttextures.com/patterns/wood-pattern.png"), radial-gradient(circle at center, #2d2d2d 0%, #1a1a1a 100%)`,
+      backgroundImage: `radial-gradient(circle at center, #2d2d2d 0%, #1a1a1a 100%)`,
       backgroundBlendMode: "overlay",
     };
   }, [background]);
@@ -341,6 +344,7 @@ const App: React.FC = () => {
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
         onBackgroundChange={handleBackgroundChange}
         onExport={handleExportImage}
+        onAnimate={() => setIsAnimationOpen(true)}
         currentScale={photos.length > 0 ? photos[0].scale : 1}
         hasPhotos={photos.length > 0}
       />
@@ -357,6 +361,17 @@ const App: React.FC = () => {
       <div className="absolute bottom-4 right-4 text-white/20 text-xs pointer-events-none select-none font-sans z-40 mix-blend-difference no-export">
         Scattered Memories • Drag to move • Click to focus
       </div>
+
+      {/* Animation Dialog */}
+      <AnimatePresence>
+        {isAnimationOpen && (
+          <AnimationDialog
+            photos={photos}
+            background={background}
+            onClose={() => setIsAnimationOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

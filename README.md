@@ -1,31 +1,30 @@
 # Scattered Photos
 
-Create stunning photo collages with authentic scattered and stacking effects. Arrange your photos freely on the canvas—just like spreading pictures across a desk, each draggable, layered, and naturally positioned.
+Create stunning photo collages with authentic scattered and stacking effects. Arrange your photos freely on the canvas, just like spreading pictures across a desk, each draggable, layered, and naturally positioned.
 
-## ✨ Features
+## Features
 
-- **Drag & Drop Interface** — Freely arrange photos anywhere on the canvas
-- **Layer Management** — Control the stacking order of your photos with an intuitive sidebar
-- **Customizable Backgrounds** — Choose from solid colors, gradients, images, or patterns
-- **AI-Powered Titles** — Generate creative titles using Gemini AI
-- **Export to PNG** — Save your composition as a high-quality image
-- **Persistent Storage** — Your photos and settings are saved locally using IndexedDB and localStorage
-- **Responsive Design** — Works seamlessly on desktop and mobile devices
+- **Drag & Drop Interface** - Freely arrange photos anywhere on the canvas
+- **Layer Management** - Control the stacking order of your photos with an intuitive sidebar
+- **Customizable Backgrounds** - Choose from solid colors, gradients, images, or patterns
+- **Export to PNG** - Save your composition as a high-quality image
+- **Persistent Storage** - Your photos and settings are saved locally using IndexedDB and localStorage
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
 
-## 🚀 Live Demo
+## Live Demo
 
-Visit the live app: [https://roysung.github.io/scattered-photos/](https://roysung.github.io/scattered-photos/)
+[https://roysung.github.io/scattered-photos/](https://roysung.github.io/scattered-photos/)
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-- **React 19** — UI framework
-- **TypeScript** — Type safety
-- **Vite** — Build tool and dev server
-- **Framer Motion** — Smooth animations
-- **html-to-image** — Canvas export functionality
-- **IndexedDB** — Client-side photo storage
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Framer Motion** - Smooth animations
+- **html-to-image** - Canvas export functionality
+- **IndexedDB** - Client-side photo storage
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -45,61 +44,37 @@ Visit the live app: [https://roysung.github.io/scattered-photos/](https://roysun
 
    ```bash
    pnpm install
-   # or
-   npm install
    ```
 
-3. Create a `.env` file with your Gemini API key (optional, for AI title generation):
-
-   ```
-   VITE_GEMINI_API_KEY=your_api_key_here
-   ```
-
-4. Start the development server:
+3. Start the development server:
 
    ```bash
    pnpm dev
-   # or
-   npm run dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## 🏗️ Build & Deployment
-
-### Build for Production
+## Build & Deployment
 
 ```bash
+# Production build
 pnpm build
-# or
-npm run build
+
+# Preview production build
+pnpm preview
 ```
 
 The built files will be in the `dist` directory.
 
-### Preview Production Build
+## Usage
 
-```bash
-pnpm preview
-# or
-npm run preview
-```
+1. **Add Photos** - Click "Add photos" to upload images from your device
+2. **Arrange** - Drag photos to your desired positions
+3. **Customize** - Use the bottom toolbar to change background colors, gradients, or images
+4. **Manage Layers** - Click the layers icon to reorder, highlight, or delete individual photos
+5. **Export** - Save your creation as a PNG
 
-## 📝 Usage
-
-1. **Add Photos** — Click "Add photos" to upload images from your device
-2. **Arrange** — Drag photos to your desired positions
-3. **Customize** — Use the bottom toolbar to:
-   - Change background colors, gradients, or images
-   - Generate AI-powered titles
-   - Clear all photos
-4. **Manage Layers** — Click the layers icon (top-right) to:
-   - Reorder photos by dragging
-   - Highlight specific photos
-   - Delete individual photos
-5. **Export** — save your creation as PNG
-
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 scattered-photos/
@@ -112,21 +87,14 @@ scattered-photos/
 │   └── storage.ts       # IndexedDB utilities
 ├── App.tsx              # Main application component
 ├── types.ts             # TypeScript type definitions
-├── vite.config.ts       # Vite configuration
-└── .github/
-    └── workflows/
-        └── deploy.yml   # GitHub Actions deployment
+└── vite.config.ts       # Vite configuration
 ```
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Feel free to:
+Contributions are welcome - feel free to report bugs, suggest features, or submit pull requests.
 
-- Report bugs
-- Suggest new features
-- Submit pull requests
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Icons by [Lucide](https://lucide.dev/)
 - Animations powered by [Framer Motion](https://www.framer.com/motion/)
